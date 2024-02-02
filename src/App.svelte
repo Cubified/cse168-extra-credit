@@ -1,4 +1,5 @@
 <script>
+  const base = '/cse167-extra-credit';
   const hw2 = [
     { desc: '<b>Cubemaps</b>:<br>Press <code>c</code> to switch between cubemaps.', img: 'cubemaps.png' },
     { desc: '<b>Mouse orbit</b>:<br>Use the mouse to orbit the scene.', img: 'mouse_orbit.png' },
@@ -12,7 +13,7 @@
 
 <main>
   <div class="masthead">
-    <img src="/utah.png" alt="Utah Teapot" />
+    <img src="{base}/utah.png" alt="Utah Teapot" />
     <h1>CSE 167 Extra Credit Site</h1>
     <h3>Andrew Russell (<a href="mailto:alrussell@ucsd.edu">alrussell@ucsd.edu</a>)</h3>
   </div>
@@ -27,7 +28,7 @@
         <div>
           {#each hw2 as { desc, img }, i}
             <div class="item">
-              <img src="/hw2/{img}" alt="HW2 demo {i}" />
+              <img src="{base}/hw2/{img}" alt="HW2 demo {i}" />
               <p>{ @html desc }</p>
             </div>
           {/each}
