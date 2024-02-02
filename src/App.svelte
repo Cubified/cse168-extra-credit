@@ -8,6 +8,7 @@
     { desc: '<b>Keyframes</b>:<br>Press <code>space</code> in edit mode to add a keyframe, then <code>e</code> to exit edit mode and play back the animation.', img: 'keyframes.gif' },
     { desc: '<b>Reflections</b>:<br>Use the <code>reflectivity</code> command to specify how much of the cubemap an object reflects.', img: 'reflections.png' },
     { desc: '<b>Textures</b>:<br>Press <code>n</code> when in edit mode to cycle between textures for each object.', img: 'textures.png' },
+    { desc: '<b>Custom Scene</b><br>Use <code>extra_credit_scene.txt</code> to view a custom scene built with cubemaps and reflections in mind.', img: 'custom_scene.png' },
   ];
 </script>
 
@@ -19,7 +20,7 @@
   </div>
   <div class="content">
     <h1>Homework 2: Scene Animator</h1>
-    <p>My project extends Homework 2 by adding more interactivity, turning the scene viewer into a scene editor.  Users can select a cubemap, transform individual objects, apply a texture to an object, add keyframes, and play back animations.</p>
+    <p>My project extends Homework 2 by adding more interactivity, turning the scene viewer into a scene editor.  Users can select a cubemap, transform individual objects, apply a texture to an object, add keyframes, and play back animations.  It also adds a custom scene, built to show off these features.</p>
     <div class="assignment">
       <div class="video">
         <iframe src="https://www.youtube.com/embed/CLpkFVdgKuM?si=_gJuo5xSdA0HqF8o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
