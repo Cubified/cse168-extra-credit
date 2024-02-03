@@ -1,14 +1,14 @@
 <script>
   const base = '/cse167-extra-credit';
   const hw2 = [
+    { desc: '<b>Custom Scene</b><br>Use <code>extra_credit_scene.txt</code> to view a custom scene built with cubemaps and reflections in mind.', img: 'custom_scene.png' },
     { desc: '<b>Cubemaps</b>:<br>Press <code>c</code> to switch between cubemaps.', img: 'cubemaps.png' },
-    { desc: '<b>Mouse orbit</b>:<br>Use the mouse to orbit the scene.', img: 'mouse_orbit.png' },
+    { desc: '<b>Keyframes</b>:<br>Press <code>space</code> in edit mode to add a keyframe, then <code>e</code> to exit edit mode and play back the animation.', img: 'keyframes.gif' },
     { desc: '<b>Edit mode</b>:<br>Press <code>e</code> to enter edit mode, then <code>tab/shift+tab</code> to focus different objects in the scene.', img: 'edit_mode.png' },
     { desc: '<b>Scene editing</b>:<br>Press <code>x/y/z</code> to select an axis, <code>t/r/s</code> to select an operation, and <code>up/down</code> to modify the current object.', img: 'scene_editing.png' },
-    { desc: '<b>Keyframes</b>:<br>Press <code>space</code> in edit mode to add a keyframe, then <code>e</code> to exit edit mode and play back the animation.', img: 'keyframes.gif' },
+    { desc: '<b>Mouse orbit</b>:<br>Use the mouse to orbit the scene.', img: 'mouse_orbit.png' },
     { desc: '<b>Reflections</b>:<br>Use the <code>reflectivity</code> command to specify how much of the cubemap an object reflects.', img: 'reflections.png' },
     { desc: '<b>Textures</b>:<br>Press <code>n</code> when in edit mode to cycle between textures for each object.', img: 'textures.png' },
-    { desc: '<b>Custom Scene</b><br>Use <code>extra_credit_scene.txt</code> to view a custom scene built with cubemaps and reflections in mind.', img: 'custom_scene.png' },
   ];
 </script>
 

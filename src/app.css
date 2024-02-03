@@ -105,11 +105,11 @@ h3 {
   justify-content: flex-start;
 }
 .item {
-  padding-left: 1rem;
+  padding-left: 2rem;
   max-width: 12rem;
 }
 .item:last-child {
-  padding-right: 1rem;
+  padding-right: 2rem;
 }
 .item img {
   aspect-ratio: 1 / 1;
