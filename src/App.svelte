@@ -23,7 +23,7 @@
     <p>My project extends Homework 2 by adding more interactivity, turning the scene viewer into a scene editor.  Users can select a cubemap, transform individual objects, apply a texture to an object, add keyframes, and play back animations.  It also adds a custom scene, built to show off these features.</p>
     <div class="assignment">
       <div class="video">
-        <iframe src="https://www.youtube.com/embed/CLpkFVdgKuM?si=_gJuo5xSdA0HqF8o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/l4iw-qttC9c?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
       <div class="scroller">
         <div>
