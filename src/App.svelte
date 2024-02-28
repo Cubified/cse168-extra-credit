@@ -10,6 +10,12 @@
     { desc: '<b>Reflections</b>:<br>Use the <code>reflectivity</code> command to specify how much of the cubemap an object reflects.', img: 'reflections.png' },
     { desc: '<b>Textures</b>:<br>Press <code>n</code> when in edit mode to cycle between textures for each object.', img: 'textures.png' },
   ];
+  const hw3 = [
+    { desc: '<b>Real-time Editing</b><br>Construct curves in a 2D editing window and see them converted into 3D within an interactive viewing window.', img: 'lathe.png' },
+    { desc: '<b>Multiple Curves</b><br>Press <code>1/2/3</code> to add a new curve, and <code>C</code> to clear all curves.', img: 'compound.png' },
+    { desc: '<b>Vertex Normals</b><br>Each 3D object generates per-vertex normals, capable of smoothly reflecting a cubemap image.', img: 'reflect.png' },
+    { desc: '<b>Curve Coloring</b><br>Press <code>N</code> to change a single curve\'s color.', img: 'color.png' },
+  ];
 </script>
 
 <main>
@@ -17,6 +23,33 @@
     <img src="{base}/utah.png" alt="Utah Teapot" />
     <h1>CSE 167 Extra Credit Site</h1>
     <h3>Andrew Russell (<a href="mailto:alrussell@ucsd.edu">alrussell@ucsd.edu</a>)</h3>
+  </div>
+  <div class="content">
+    <h1>Homework 3: Lathe Editor</h1>
+    <p>My project extends Homework 3 by generating a solid of revolution (lathe) from the user's curves.  It also generates smooth vertex normals, demonstrated by a cubemap for reflections.  Users can also add multiple curves and change their colors, in order to create complex compound shapes.</p>
+    <div class="assignment">
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/aVaHUaQEquQ?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="scroller">
+        <div>
+          {#each hw3 as { desc, img }, i}
+            <div class="item nonsquare">
+              <img src="{base}/hw3/{img}" alt="HW3 demo {i}" />
+              <p>{ @html desc }</p>
+            </div>
+          {/each}
+        </div>
+      </div>
+    </div>
+    <h4>Sources and Asset Credits:</h4>
+    <p class="spread">
+      <a href="https://stackoverflow.com/questions/7904281/opengl-rotate-a-curve-about-the-y-axis">Solid of Revolution Generation</a>
+      &nbsp;|&nbsp;
+      <a href="https://computergraphics.stackexchange.com/questions/4031/programmatically-generating-vertex-normals">Vertex Normals Calculation</a>
+      &nbsp;|&nbsp;
+      <a href="https://www.humus.name/index.php?page=Textures&start=0">Cubemap Image</a>
+    </p>
   </div>
   <div class="content">
     <h1>Homework 2: Scene Animator</h1>
