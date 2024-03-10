@@ -16,6 +16,14 @@
     { desc: '<b>Vertex Normals</b><br>Each 3D object generates per-vertex normals, capable of smoothly reflecting a cubemap image.', img: 'reflect.png' },
     { desc: '<b>Curve Coloring</b><br>Press <code>N</code> to change a single curve\'s color.', img: 'color.png' },
   ];
+  const hw4 = [
+    { desc: '<b>Main Assignment: High-Performance</b><br>Capable of rendering the Stanford dragon (100,000 triangles) at 4K resolution (3840x2160 pixels) in 1.7 seconds on an M1 Macbook Air.', img: 'dragon_4k.png' },
+    { desc: '<b>Main Assignment: Acceleration Structure</b><br>Computes a bounding volume hierarchy for fast intersection tests, reducing the time to render a scene with 100,000 triangles at 4K from 10 minutes to 1.7 seconds.', img: 'acceleration.png' },
+    { desc: '<b>Main Assignment: Multithreaded</b><br>Uses <code>std::thread</code> to render each scanline in a separate thread, improving performance by approximately 10x for sufficiently complex scenes.', img: 'multithreaded.png' },
+    { desc: '<b>Extra Credit: Real-Time</b><br>Capable of rendering directly to the terminal via ANSI escape sequences in real-time.', img: 'realtime.png' },
+    { desc: '<b>Extra Credit: Interactive</b><br>Click and drag the mouse to orbit around the scene to view it from different angles.', img: 'interactive.png' },
+    { desc: '<b>Extra Credit: Resizable</b><br>Re-run the program with the terminal at different zoom levels to view the scene at different resolutions.', img: 'resolution.png' },
+  ];
 </script>
 
 <main>
@@ -23,6 +31,38 @@
     <img src="{base}/utah.png" alt="Utah Teapot" />
     <h1>CSE 167 Extra Credit Site</h1>
     <h3>Andrew Russell (<a href="mailto:alrussell@ucsd.edu">alrussell@ucsd.edu</a>)</h3>
+  </div>
+  <div class="content">
+    <h1>Final Project:<br>Interactive, Real-Time Raytracer in the Terminal</h1>
+    <p>I extended my raytracer by reading and writing <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape sequences</a> to standard input and standard output.  Coupled with the performance gains from my bounding volume hierarchy and the addition of multithreading, this allows for interactive raytracing in real-time.</p>
+    <div class="assignment">
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/F71dgYAOl-I?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="scroller">
+        <div>
+          {#each hw4 as { desc, img }, i}
+            <div class="item nonsquare">
+              <img src="{base}/hw4/{img}" alt="HW4 demo {i}" />
+              <p>{ @html desc }</p>
+            </div>
+          {/each}
+        </div>
+      </div>
+    </div>
+
+    <h4>Sources:</h4>
+    <p class="spread">
+      <a href="https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf">Triangle intersection algorithm</a>
+      &nbsp;|&nbsp;
+      <a href="https://math.stackexchange.com/a/128999">Triangle area formula</a>
+      &nbsp;|&nbsp;
+      <a href="https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics">BVH calculation</a>
+      &nbsp;|&nbsp;
+      <a href="https://tavianator.com/2011/ray_box.html">AABB intersection test</a>
+      &nbsp;|&nbsp;
+      <a href="https://github.com/nothings/stb/blob/master/stb_image_write.h"><code>stb_image_write</code></a>
+    </p>
   </div>
   <div class="content">
     <h1>Homework 3: Lathe Editor</h1>
