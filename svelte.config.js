@@ -5,6 +5,6 @@ export default {
   // for more information about preprocessors
   preprocess: vitePreprocess(),
   paths: {
-    base: '/cse167-extra-credit',
+    base: '/cse168-extra-credit',
   },
 }
