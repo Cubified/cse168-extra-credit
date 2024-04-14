@@ -43,9 +43,12 @@
     <h3>Andrew Russell (<a href="mailto:alrussell@ucsd.edu">alrussell@ucsd.edu</a>)</h3>
   </div>
   <div class="content">
-    <h1>Homework 1:<br>Ray Tracer Improvements</h1>
-    <p>I improved my ray tracer from CSE 167 by adding antialiasing, area lights, depth-of-field, texture mapping, and .OBJ file parsing.</p>
+    <h1>Homework 1:<br>Interactive Scene Editor for Ray Tracer</h1>
+    <p>I improved my ray tracer from CSE 167 by adding antialiasing, area lights, depth-of-field, texture mapping, and .OBJ file parsing. Scenes are now editable in real-time using a <a href="https://github.com/ocornut/imgui">Dear Imgui</a>-based user interface.</p>
     <div class="assignment">
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/b-tWFDPlZHQ?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
       <div class="scroller">
         <div>
           {#each hw1_168 as { desc, img }, i}
