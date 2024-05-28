@@ -1,4 +1,6 @@
 <script>
+  import Compare from './Compare.svelte';
+
   const base = '/cse168-extra-credit';
   const hw2 = [
     { desc: '<b>Custom Scene</b><br>Use <code>extra_credit_scene.txt</code> to view a custom scene built with cubemaps and reflections in mind.', img: 'custom_scene.png' },
@@ -41,6 +43,17 @@
     <img src="{base}/utah.png" alt="Utah Teapot" />
     <h1>CSE 168 Extra Credit Site</h1>
     <h3>Andrew Russell (<a href="mailto:alrussell@ucsd.edu">alrussell@ucsd.edu</a>)</h3>
+  </div>
+  <div class="content">
+      <h1>Final Project:<br>Modern Image Denoising</h1>
+      <p>
+        My planned final project implements the denoising algorithm proposed in the 2018 paper <a href="https://arxiv.org/abs/1807.04364">"A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising" by Xu, Zhang, and Zhang</a>.
+      </p>
+      <br />
+      <p>It is a notable algorithm because it specifically aims to reduce "real-world noise," or noise patterns that occur more commonly in photos taken by physical cameras.  This is in contrast to algorithms which assume noise samples randomly from <b>additive white Gaussian noise (AWGN)</b>, a relatively simple analytical model for electron motion.  I would like to investigate <b>whether this more complex modeling of noise positively impacts image denoising in path-traced images</b>, and if so what specific parameters produce the best results.</p>
+      <br />
+      <Compare left="{base}/final/twsc_in.png" right="{base}/final/twsc_out.png" />
+      <p><i>This is a side-by-side comparison of the original GGX sample scene (left) and the GGX sample scene after being passed through TWSC denoising (right). Drag the divider to compare the images.</i></p>
   </div>
   <div class="content">
     <h1>Homework 1:<br>Interactive Scene Editor for Ray Tracer</h1>
