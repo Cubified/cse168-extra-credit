@@ -11,12 +11,33 @@
       dragger.style.width = (x - left) + 'px';
     };
 
-    edge.addEventListener('mousedown', (e) => { down = true; });
-    container.addEventListener('mouseup', () => { down = false; });
+    edge.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      down = true;
+    });
+    edge.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      down = true;
+    });
+    container.addEventListener('mouseup', (e) => {
+      e.preventDefault();
+      down = false;
+    });
+    container.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      down = false;
+    });
     container.addEventListener('mousemove', (e) => {
       if (!down) return;
 
+      e.preventDefault();
       update(e.clientX);
+    });
+    container.addEventListener('touchmove', (e) => {
+      if (!down) return;
+
+      e.preventDefault();
+      update(e.touches[0].clientX);
     });
 
     update(container.getBoundingClientRect().left + (container.offsetWidth / 2));
@@ -25,10 +46,10 @@
 
 <div bind:this={container} class="image_compare">
   <div bind:this={dragger} class="dragger">
-    <img src={left} alt="Left image" draggable={false} />
+    <img src={left} alt="Scene before TWSC denoising" draggable={false} />
     <div bind:this={edge} class="edge" />
   </div>
-  <img src={right} alt="Right image" draggable={false} />
+  <img src={right} alt="Scene after TWSC denoising" draggable={false} />
 </div>
 
 <style>
