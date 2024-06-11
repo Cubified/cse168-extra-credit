@@ -1,184 +1,253 @@
 <script>
   import Compare from './Compare.svelte';
+  import Reveal from './Reveal.svelte';
 
   const base = '/cse168-extra-credit';
-  const hw2 = [
-    { desc: '<b>Custom Scene</b><br>Use <code>extra_credit_scene.txt</code> to view a custom scene built with cubemaps and reflections in mind.', img: 'custom_scene.png' },
-    { desc: '<b>Cubemaps</b>:<br>Press <code>c</code> to switch between cubemaps.', img: 'cubemaps.png' },
-    { desc: '<b>Keyframes</b>:<br>Press <code>space</code> in edit mode to add a keyframe, then <code>e</code> to exit edit mode and play back the animation.', img: 'keyframes.gif' },
-    { desc: '<b>Edit mode</b>:<br>Press <code>e</code> to enter edit mode, then <code>tab/shift+tab</code> to focus different objects in the scene.', img: 'edit_mode.png' },
-    { desc: '<b>Scene editing</b>:<br>Press <code>x/y/z</code> to select an axis, <code>t/r/s</code> to select an operation, and <code>up/down</code> to modify the current object.', img: 'scene_editing.png' },
-    { desc: '<b>Mouse orbit</b>:<br>Use the mouse to orbit the scene.', img: 'mouse_orbit.png' },
-    { desc: '<b>Reflections</b>:<br>Use the <code>reflectivity</code> command to specify how much of the cubemap an object reflects.', img: 'reflections.png' },
-    { desc: '<b>Textures</b>:<br>Press <code>n</code> when in edit mode to cycle between textures for each object.', img: 'textures.png' },
-  ];
-  const hw3 = [
-    { desc: '<b>Real-time Editing</b><br>Construct curves in a 2D editing window and see them converted into 3D within an interactive viewing window.', img: 'lathe.png' },
-    { desc: '<b>Multiple Curves</b><br>Press <code>1/2/3</code> to add a new curve, and <code>C</code> to clear all curves.', img: 'compound.png' },
-    { desc: '<b>Vertex Normals</b><br>Each 3D object generates per-vertex normals, capable of smoothly reflecting a cubemap image.', img: 'reflect.png' },
-    { desc: '<b>Curve Coloring</b><br>Press <code>N</code> to change a single curve\'s color.', img: 'color.png' },
-  ];
-  const hw4 = [
-    { desc: '<b>Main Assignment: High-Performance</b><br>Capable of rendering the Stanford dragon (100,000 triangles) at 4K resolution (3840x2160 pixels) in 1.7 seconds on an M1 Macbook Air.', img: 'dragon_4k.png' },
-    { desc: '<b>Main Assignment: Acceleration Structure</b><br>Computes a bounding volume hierarchy for fast intersection tests, reducing the time to render a scene with 100,000 triangles at 4K from 10 minutes to 1.7 seconds.', img: 'acceleration.png' },
-    { desc: '<b>Main Assignment: Multithreaded</b><br>Uses <code>std::thread</code> to render each scanline in a separate thread, improving performance by approximately 10x for sufficiently complex scenes.', img: 'multithreaded.png' },
-    { desc: '<b>Extra Credit: Real-Time</b><br>Capable of rendering directly to the terminal via ANSI escape sequences in real-time.', img: 'realtime.png' },
-    { desc: '<b>Extra Credit: Interactive</b><br>Click and drag the mouse to orbit around the scene to view it from different angles.', img: 'interactive.png' },
-    { desc: '<b>Extra Credit: Resizable</b><br>Re-run the program with the terminal at different zoom levels to view the scene at different resolutions.', img: 'resolution.png' },
-  ];
-
-  const hw1_168 = [
-    { desc: '<b>Acceleration Structure</b><br>Computes a bounding volume hierarchy for fast intersection tests, reducing the time to render a scene with 100,000 triangles at 4K from 10 minutes to 1.7 seconds.', img: 'acceleration.png' },
-    { desc: '<b>.OBJ File Parsing</b><br>Use the <code>obj</code> command to add a Wavefront OBJ model to the scene, with support for models that supply their own vertex normals and texture coordinates.', img: 'obj.png' },
-    { desc: '<b>Texture Mapping</b><br>Use the <code>image</code> command to set the scene\'s background image, and the <code>texture</code> command to set the current object\'s texture using a PNG file.', img: 'textures.png' },
-    { desc: '<b>Area Lights/Soft Shadows</b><br>Use the <code>area</code> command to create an area light, which randomly samples shadow rays based on the <code>shadowsamples</code> command.', img: 'soft_shadows.png' },
-    { desc: '<b>Antialiasing</b><br>Use the <code>aasamples</code> command to adjust the number of jitter-sampled rays. The first ray is always shot through the center of each pixel.', img: 'antialiasing.png' },
-    { desc: '<b>Depth-of-Field</b><br>Modify <code>focallen, aperture,</code> and <code>dofsamples</code> to adjust the lens properties for randomly-sampled depth-of-field.', img: 'dof.png' },
-    { desc: '<b>Multithreading</b><br>Uses <code>std::thread</code> to render scanlines in separate threads, improving performance by approximately 10x for sufficiently complex scenes. Adjust the <code>threads</code> command to spawn a different number of threads.', img: 'multithreaded.png' },
-  ];
+  const table_data = {
+    '1_1_5':   ['1m14s',  '5.031754', '#56bb89', '#f2a86b'],
+    '1_2_5':   ['2m18s',  '5.031754', '#8ac37e', '#f2a86b'],
+    '1_1_10':  ['1m28s',  '5.414220', '#63bc88', '#e67c73'],
+    '1_2_10':  ['1m38s',  '5.414220', '#6bbe85', '#e67c73'],
+    '5_1_5':   ['2m58s',  '3.741353', '#aac879', '#63bc88'],
+    '5_2_5':   ['2m46s',  '3.756481', '#9fc67b', '#63bc88'],
+    '5_1_10':  ['7m48s',  '4.184678', '#f9bf69', '#afc978'],
+    '5_2_10':  ['6m51s',  '4.199410', '#fbc667', '#f9bf69'],
+    '10_1_5':  ['6m28s',  '5.208630', '#fcc966', '#ec946f'],
+    '10_1_10': ['13m36s', '3.803667', '#ec926e', '#63bc88'],
+    '10_2_5':  ['7m14s',  '5.177674', '#fbc368', '#ed976f'],
+    '10_2_10': ['16m19s', '3.848877', '#e67c73', '#6bbe85'],
+  };
 </script>
 
 <main>
-  <div class="masthead">
-    <img src="{base}/utah.png" alt="Utah Teapot" />
-    <h1>CSE 168 Extra Credit Site</h1>
+  <div id="top" class="masthead">
+    <Compare left='{base}/final/hero_day/hero_day_in.png' right='{base}/final/hero_day/hero_day_twsc.png' />
+    <h1>A Comparison of Modern Denoising Approaches<br />for Path Traced Images</h1>
     <h3>Andrew Russell (<a href="mailto:alrussell@ucsd.edu">alrussell@ucsd.edu</a>)</h3>
   </div>
-  <div class="content">
-      <h1>Final Project:<br>Modern Image Denoising</h1>
-      <p>
-        My planned final project implements the denoising algorithm proposed in the 2018 paper <a href="https://arxiv.org/abs/1807.04364">"A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising" by Xu, Zhang, and Zhang</a>.
+
+  <div class="scroller">
+    <div class="row">
+      <div class="left">
+        <Reveal name="reflect" />
+      </div>
+      <div class="right">
+        <h1 id="introduction">Introduction</h1>
+        <p>
+        For my final project, I sought to understand the degree to which auxiliary feature buffers improve the quality of denoised images.  While I understood how a deep denoiser (such as the <a href="https://developer.nvidia.com/optix-denoiser">denoiser included with NVIDIA's OptiX</a> or <a href="https://www.openimagedenoise.org">Intel's Open Image Denoise</a>) used features such as normals as inputs to their models, I was curious whether a state-of-the-art "naive" denoiser used in computer vision could be effective in denoising path traced images.
+        </p>
+        <p>
+          I elected to implement the denoising algorithm proposed in the 2018 paper <a href="https://arxiv.org/abs/1807.04364">"A Trilateral Weighted Sparse Coding Scheme for Real-World Image Denoising" by Xu, Zhang, and Zhang</a>.  It is a notable paper because it specifically aims to reduce "real-world noise," or noise patterns that occur more commonly in photos taken by physical cameras.  This is in contrast to algorithms which assume noise samples randomly from <b>additive white Gaussian noise (AWGN)</b>, a relatively simple analytical model for electron motion.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="left">
+        <h1>Algorithm Design</h1>
+        <p>
+        The Trilateral Weighted Sparse Coding Scheme (TWSC) algorithm operates on <b>patches</b>, rectangular portions of a given input image.  A set of patches can be generated by <b>computing local variance at various regions in the image</b> and aggregating regions with similar variance, after which each patch can be compared for similarity to all other patches.  Once a set of nonlocal similar patches is created, the <b>"TWSC scheme" (derived by singular value decomposition)</b> can be applied to denoise the patch.  After this is completed, the output image can be <b>reconstructed from each of the processed patches</b>.
+        </p>
+      </div>
+      <div class="right">
+        <Reveal name="suzanne" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="left">
+        <Reveal name="ggx" />
+      </div>
+      <div class="right">
+        <h1>Implementation</h1>
+        <p>
+        Because the paper authors made their <a href="https://github.com/csjunxu/TWSC-ECCV2018">MATLAB code available on GitHub</a>, I aimed to convert this into pure C++.  My resulting code produced the following functions:
+        </p>
+        <ul style="text-align: left">
+          <li><b><code>SearchNeighborIndex</code></b>: Constructs matrices/vectors allowing for fast lookup of a patch's neighbors</li>
+          <li><b><code>Image2Patch</code></b>: Converts an image to a set of patches</li>
+          <li><b><code>Block_Matching_RW</code></b>: Performs block matching by determining nonlocal similar patches for each patch</li>
+          <li><b><code>PGs2Image</code></b>: Reconstructs the output image from a set of processed patches</li>
+          <li><b><code>TWSC_RW</code></b>: Composes the above functions and applies the TWSC scheme to each patch</li>
+        </ul>
+        <p>
+        Due to the matrix-heavy nature of the original MATLAB code, I made use of <a href="https://opencv.org">OpenCV</a>'s <a href="https://docs.opencv.org/4.x/d3/d63/classcv_1_1Mat.html"><code>Mat</code></a> class for matrix operations.  However, many features did not have direct analogues and required manual implementation (such as matrix/vector broadcasting via <code>bsxfun</code> or column slicing by an index array).  Overall, this was an extremely difficult programming task and took me significantly longer than any prior assignment.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="left">
+        <h1 id="oidn">Open Image Denoise</h1>
+        <p>For comparison against TWSC, I also added Intel's Open Image Denoise (OIDN) to my path tracer.  OIDN is a deep denoiser that provides a variety of pre-trained deep learning models for use with computer generated images.  It is capable of naively denoising images (like TWSC), but also accepts inputs in the form of auxiliary feature buffers such as normals or albedo.  I <a href="https://github.com/RenderKit/oidn">compiled OIDN from source</a> to use the CPU backend, and integrated it into my codebase using the <a href="https://github.com/RenderKit/oidn?tab=readme-ov-file#basic-denoising-c11-api">C++11 API</a>.  OIDN can also be run on the command line using the <code>oidnDenoise</code> command-line tool.</p>
+      </div>
+      <div class="right">
+        <Reveal name="magnolia" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="left">
+        <img src="{base}/final/hero/hero_normal.png" alt="Mountain normal" />
+      </div>
+      <div class="right">
+        <h1>Normals</h1>
+        <p>To improve OIDN's performance, I added support for my path tracer to store normals to an output buffer.  While a pixel is being path traced, its first intersection writes the intersected object's normals into the buffer.  Then, this data is passed as an auxiliary buffer to OIDN.</p>
+        <p>While OIDN supports naive denoising (i.e. without normals), I found its output to be largely similar to the deep denoised images with slightly more blurring.  Therefore, all OIDN images displayed in this writeup were denoised using normals as an auxiliary feature buffer.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="left">
+        <h1>Results</h1>
+        <p>Many images produced with this algorithm are compelling, and exhibit a number of useful properties.  However, there are also a number of noticeable drawbacks when compared to OIDN.</p>
+        <ul style="text-align: left">
+          <li>
+            <b>Pro</b>:  High-frequency "fireflies" are largely removed.
+            <ul>
+              <li>As would be expected, TWSC is capable of removing almost all (if not all) "fireflies" seen in path traced images.</li>
+            </ul>
+          </li>
+          <li>
+            <b>Pro</b>:  Edges are preserved without blurring.
+            <ul>
+              <li>The patch similarity and variance comparison subroutines ensure that only noise is eliminated, rather than blurring edges between true image elements.</li>
+            </ul>
+          </li>
+          <li>
+            <b>Pro</b>:  Sharp specular highlights are kept sharp.
+            <ul>
+              <li>Specular reflections from small area lights onto highly reflective surfaces are not blurred away.</li>
+            </ul>
+          </li>
+          <hr />
+          <li>
+            <b>Con</b>:  Low-frequency details are blurred.
+            <ul>
+              <li>As is visible in the dragon image, the low-frequency details such as the ridges along the inner edge of its body are heavily blurred.  Upon further testing, tweaking the algorithm's input parameters help but do not fully resolve this for most images.</li>
+            </ul>
+          </li>
+          <li>
+            <b>Con</b>:  Reflections remain relatively noisy.
+            <ul>
+              <li>As demonstrated in the <a href="#introduction">teapots image</a>, the reflections present along the mirror ball remain noisy.  This is likely due to the image lacking any similar patches to the reflected regions, whereas portions of the floor or teapots have a significant number of self-similar regions.</li>
+            </ul>
+          </li>
+          <li>
+            <b>Con</b>:  Path traced effects are not reproduced faithfully.
+            <ul>
+              <li>The <a href="#oidn">magnolia image</a> shows how OIDN excels at reproducing what an image <i>should</i> look like, whereas TWSC simply removes noise without adding any new qualities to the image.  This makes sense because OIDN's models have a conception of the types of reflection, indirect lighting, and other effects that are desirable in path traced images due to their training data.  Unsurprisingly, TWSC has no such ability to reproduce these effects.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Below is a comparison of various input parameters described in the paper:  Outer loop iterations (recommended by authors to be set between 1 and 10), inner loop iterations (either 1 or 2), and image patch size (between 5 and 10).  Further testing outside of these ranges did not yield significantly different results, therefore only results using parameters in recommended ranges are shown.</p>
+      </div>
+      <div class="right">
+        <Reveal name="dragon" />
+      </div>
+    </div>
+
+    <div class="compare">
+      <div>
+        <img src="{base}/final/teapot/teapot_16_in.png" alt="Input (16 spp)" />
+        <br />
+        <i>Input image (16 spp)</i>
+      </div>
+      <div>
+        <img src="{base}/final/teapot/teapot_256_in.png" alt="Ground truth (256 spp)" />
+        <br />
+        <i>Ground truth (256 spp)</i>
+      </div>
+      {#each [1, 5, 10] as outer}
+        {#each [1, 2] as inner}
+          {#each [5, 10] as patch}
+            <div>
+              <Reveal name="{base}/final/teapot/teapot_{outer}_{inner}_{patch}" alt="{outer} outer, {inner} inner, {patch} patch" variant="difference" />
+              <br />
+              <i>{outer} outer iteration{outer === 1 ? '' : 's'}, {inner} inner iteration{inner === 1 ? '' : 's'}, patch size {patch}</i>
+            </div>
+          {/each}
+        {/each}
+      {/each}
+    </div>
+
+    <div class="row">
+      <div class="left">
+        <Reveal name="cornell_brdf" />
+      </div>
+      <div class="right">
+        <h1>Performance Analysis</h1>
+        <p>Overall, this algorithm's major drawbacks are that it is <b>very slow</b> and <b>largely unparallelizable</b>.  However, of note is that performance did not appear to vary with the amount of noise in an image, only its resolution and the algorithm's input parameters.  Below is a table comparing various input parameters and their corresponding root-mean-square errors for the above set of teapot images.  All 720x480 images were generated using my C++/OpenCV implementation and exclude render time, and all timing tests were performed on a 2021 M1 MacBook Air with no background activity.</p>
+        <p>Clearly, larger patch sizes are associated with longer denoise times (as are increased iteration counts).  However, a few other points of note arise as well:</p>
+        <ul style="text-align: left">
+          <li>Increasing patch size produces a visually smoother image, while increasing either iteration count eliminates more "fireflies."</li>
+          <li>5 outer iterations, 1 inner iteration, and patch size 5 produced the smallest error (approximately 3.74), but noise is still visually apparent in its generated image.</li>
+          <li>Qualitatively, images generated with patch size 10 are more pleasing than those generated with patch size 5 despite their worse overall error measurements.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="left" style="flex: 1">
+        <table>
+          <thead>
+            <tr>
+              <th>Outer Loop Iterations</th>
+              <th>Inner Loop Iterations</th>
+              <th>Patch Size</th>
+              <th>Denoise Time</th>
+              <th>RMSE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each [1, 5, 10] as outer}
+              {#each [1, 2] as inner}
+                {#each [5, 10] as patch}
+                  <tr>
+                    <td>{outer}</td>
+                    <td>{inner}</td>
+                    <td>{patch}</td>
+                    <td style="background-color: {table_data[`${outer}_${inner}_${patch}`][2]}; color: black;"><code>{table_data[`${outer}_${inner}_${patch}`][0]}</code></td>
+                    <td style="background-color: {table_data[`${outer}_${inner}_${patch}`][3]}; color: black;"><code>{table_data[`${outer}_${inner}_${patch}`][1]}</code></td>
+                  </tr>
+                {/each}
+              {/each}
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="center">
+        <h1>Conclusion</h1>
+        <p>
+          Ultimately, OIDN denoising is almost always more effective while also being orders of magnitude faster.  While this does not mean that TWSC is not without its valid applications, implementing and using it on path traced images has shown it to be insufficient for the types of noise generated during Monte Carlo rendering.
+        </p>
+        <p>
+          Further, performing this comparison has demonstrated that the main strength of a deep learning-based denoiser is not simply its ability to use auxiliary feature information, but the speed and wide applicability of a well-trained deep learning model at reproducing the types of effects most common in computer-generated images.
+        </p>
+        <p>
+          This result is largely unsurprising, however it does not mean that TWSC was incapable of producing pleasing images.  Taken to its extreme, TWSC was able to denoise the <a href="#top">mountain scene</a> to produce a very compelling image.  The initial render was done at 8K resolution and denoising took several hours to complete, making TWSC exceptionally costly for reproducing fine details such as the mountain's ridges.  Despite this somewhat underwhelming result, this exploration was an excellent learning experience for me regarding modern image processing and the implementation of a complex algorithm.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="light">
+    <div>
+      <h4>Sources and Asset Credits</h4>
+      <p class="spread">
+        <a href="https://free3d.com/3d-model/mountain-183041.html">Mountain model</a>
+        &nbsp;|&nbsp;
+        <a href="https://graphics.stanford.edu/courses/cs148-10-summer/as3/code/as3/teapot.obj">Utah Teapot model</a>
+        &nbsp;|&nbsp;
+        <a href="https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html">Magnolia model</a>
+        &nbsp;|&nbsp;
+        <a href="https://openaccess.thecvf.com/content_ECCV_2018/papers/XU_JUN_A_Trilateral_Weighted_ECCV_2018_paper.pdf">TWSC paper</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/RenderKit/oidn">OIDN documentation and examples</a>
+        &nbsp;|&nbsp;
+        <a href="https://docs.opencv.org/4.10.0">OpenCV 4 documentation</a>
       </p>
-      <br />
-      <p>It is a notable algorithm because it specifically aims to reduce "real-world noise," or noise patterns that occur more commonly in photos taken by physical cameras.  This is in contrast to algorithms which assume noise samples randomly from <b>additive white Gaussian noise (AWGN)</b>, a relatively simple analytical model for electron motion.  I would like to investigate <b>whether this more complex modeling of noise positively impacts image denoising in path-traced images</b>, and if so what specific parameters produce the best results.</p>
-      <br />
-      <Compare left="{base}/final/twsc_in.png" right="{base}/final/twsc_out.png" />
-      <p><i>This is a side-by-side comparison of the original GGX sample scene (left) and the GGX sample scene after being passed through TWSC denoising (right). Drag the divider to compare the images.</i></p>
-  </div>
-  <div class="content">
-    <h1>Homework 1:<br>Interactive Scene Editor for Ray Tracer</h1>
-    <p>I improved my ray tracer from CSE 167 by adding antialiasing, area lights, depth-of-field, texture mapping, and .OBJ file parsing. Scenes are now editable in real-time using a <a href="https://github.com/ocornut/imgui">Dear Imgui</a>-based user interface.</p>
-    <div class="assignment">
-      <div class="video">
-        <iframe src="https://www.youtube.com/embed/b-tWFDPlZHQ?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="scroller">
-        <div>
-          {#each hw1_168 as { desc, img }, i}
-            <div class="item nonsquare">
-              <img src="{base}/hw1_168/{img}" alt="HW1 demo {i}" />
-              <p>{ @html desc }</p>
-            </div>
-          {/each}
-        </div>
-      </div>
+      <!--
+      <hr />
+      <p>
+        <a href="{base}/extra_credit">CSE 167/168 Extra Credit Site</a>
+      </p>
+      -->
     </div>
-
-    <h4>Sources:</h4>
-    <p class="spread">
-      <a href="https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf">Triangle intersection algorithm</a>
-      &nbsp;|&nbsp;
-      <a href="https://math.stackexchange.com/a/128999">Triangle area formula</a>
-      &nbsp;|&nbsp;
-      <a href="https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics">BVH calculation</a>
-      &nbsp;|&nbsp;
-      <a href="https://tavianator.com/2011/ray_box.html">AABB intersection test</a>
-      &nbsp;|&nbsp;
-      <a href="https://en.wikipedia.org/wiki/Wavefront_.obj_file">.OBJ file format</a>
-      &nbsp;|&nbsp;
-      <a href="https://github.com/nothings/stb/blob/master/stb_image_write.h"><code>stb_image_write</code></a>
-      &nbsp;|&nbsp;
-      <a href="https://github.com/nothings/stb/blob/master/stb_image.h"><code>stb_image</code></a>
-    </p>
-  </div>
-  <div class="content">
-    <h1>CSE 167 Final Project:<br>Interactive, Real-Time Ray Tracer in the Terminal</h1>
-    <p>I extended my raytracer by reading and writing <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape sequences</a> to standard input and standard output.  Coupled with the performance gains from my bounding volume hierarchy and the addition of multithreading, this allows for interactive raytracing in real-time.</p>
-    <div class="assignment">
-      <div class="video">
-        <iframe src="https://www.youtube.com/embed/F71dgYAOl-I?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="scroller">
-        <div>
-          {#each hw4 as { desc, img }, i}
-            <div class="item nonsquare">
-              <img src="{base}/hw4/{img}" alt="HW4 demo {i}" />
-              <p>{ @html desc }</p>
-            </div>
-          {/each}
-        </div>
-      </div>
-    </div>
-
-    <h4>Sources:</h4>
-    <p class="spread">
-      <a href="https://cadxfem.org/inf/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf">Triangle intersection algorithm</a>
-      &nbsp;|&nbsp;
-      <a href="https://math.stackexchange.com/a/128999">Triangle area formula</a>
-      &nbsp;|&nbsp;
-      <a href="https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics">BVH calculation</a>
-      &nbsp;|&nbsp;
-      <a href="https://tavianator.com/2011/ray_box.html">AABB intersection test</a>
-      &nbsp;|&nbsp;
-      <a href="https://github.com/nothings/stb/blob/master/stb_image_write.h"><code>stb_image_write</code></a>
-    </p>
-  </div>
-  <div class="content">
-    <h1>CSE 167 Homework 3: Lathe Editor</h1>
-    <p>My project extends Homework 3 by generating a solid of revolution (lathe) from the user's curves.  It also generates smooth vertex normals, demonstrated by a cubemap for reflections.  Users can also add multiple curves and change their colors, in order to create complex compound shapes.</p>
-    <div class="assignment">
-      <div class="video">
-        <iframe src="https://www.youtube.com/embed/aVaHUaQEquQ?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="scroller">
-        <div>
-          {#each hw3 as { desc, img }, i}
-            <div class="item nonsquare">
-              <img src="{base}/hw3/{img}" alt="HW3 demo {i}" />
-              <p>{ @html desc }</p>
-            </div>
-          {/each}
-        </div>
-      </div>
-    </div>
-    <h4>Sources and Asset Credits:</h4>
-    <p class="spread">
-      <a href="https://stackoverflow.com/questions/7904281/opengl-rotate-a-curve-about-the-y-axis">Solid of Revolution Generation</a>
-      &nbsp;|&nbsp;
-      <a href="https://computergraphics.stackexchange.com/questions/4031/programmatically-generating-vertex-normals">Vertex Normals Calculation</a>
-      &nbsp;|&nbsp;
-      <a href="https://www.humus.name/index.php?page=Textures&start=0">Cubemap Image</a>
-    </p>
-  </div>
-  <div class="content">
-    <h1>CSE 167 Homework 2: Scene Animator</h1>
-    <p>My project extends Homework 2 by adding more interactivity, turning the scene viewer into a scene editor.  Users can select a cubemap, transform individual objects, apply a texture to an object, add keyframes, and play back animations.  It also adds a custom scene, built to show off these features.</p>
-    <div class="assignment">
-      <div class="video">
-        <iframe src="https://www.youtube.com/embed/l4iw-qttC9c?si=9SXhBIqVycQj7vqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="scroller">
-        <div>
-          {#each hw2 as { desc, img }, i}
-            <div class="item">
-              <img src="{base}/hw2/{img}" alt="HW2 demo {i}" />
-              <p>{ @html desc }</p>
-            </div>
-          {/each}
-        </div>
-      </div>
-    </div>
-    <h4>Sources and Asset Credits:</h4>
-    <p class="spread">
-      <a href="https://learnopengl.com/Advanced-OpenGL/Cubemaps">Learn OpenGL: Cubemaps</a>
-      &nbsp;|&nbsp;
-      <a href="https://www.humus.name/index.php?page=Textures&start=0">Cubemap Images</a>
-      &nbsp;|&nbsp;
-      <a href="https://architextures.org/textures/category/stone">Limestone Texture</a>
-      &nbsp;|&nbsp;
-      <a href="https://easings.net/#easeInOutQuad">Easing Function Formula</a>
-      &nbsp;|&nbsp;
-      I used <a href="https://glm.g-truc.net/0.9.3/api/a00178.html"><code>glm::interpolate</code></a> to achieve interpolation between keyframes.
-    </p>
   </div>
 </main>

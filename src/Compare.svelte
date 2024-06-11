@@ -3,7 +3,7 @@
 
   export let left, right;
 
-  let edge, container, dragger, down = false;
+  let edge, container, dragger;
   onMount(() => {
     const update = (x) => {
       const left = container.getBoundingClientRect().left;
@@ -11,31 +11,11 @@
       dragger.style.width = (x - left) + 'px';
     };
 
-    edge.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      down = true;
-    });
-    edge.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      down = true;
-    });
-    container.addEventListener('mouseup', (e) => {
-      e.preventDefault();
-      down = false;
-    });
-    container.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      down = false;
-    });
     container.addEventListener('mousemove', (e) => {
-      if (!down) return;
-
       e.preventDefault();
       update(e.clientX);
     });
     container.addEventListener('touchmove', (e) => {
-      if (!down) return;
-
       e.preventDefault();
       update(e.touches[0].clientX);
     });
@@ -67,6 +47,7 @@
 .image_compare .dragger {
   width: 50%;
   max-width: 40rem;
+  height: 100%;
   overflow: hidden;
   position: absolute;
   top: 0;
@@ -88,7 +69,11 @@
 
 @media only screen and (max-width: 640px) {
   .image_compare .dragger img {
-    max-width: 100vw;
+    height: 98%;
+    user-select: none;
+  }
+  .image_compare > img {
+    height: 100%;
     user-select: none;
   }
 }

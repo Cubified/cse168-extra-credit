@@ -51,10 +51,16 @@ h3 {
   background: #0D9276;
 }
 .masthead > img {
-  width: 7.5rem;
+  width: 40rem;
+  max-width: 100%;
 }
 .masthead > h3 {
   margin-bottom: 0;
+}
+@media only screen and (max-width: 40rem) {
+  .masthead > img {
+    width: 100vw;
+  }
 }
 
 .content {
@@ -128,4 +134,85 @@ h3 {
 }
 .item p {
   color: black;
+}
+
+.scroller {
+  background: #242424;
+  margin-bottom: 2rem;
+}
+.scroller .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 2rem 2rem 0;
+  gap: 2rem;
+  text-align: left;
+}
+.scroller .row img {
+  max-width: 50vw;
+}
+.scroller .row .text {
+  flex: 1;
+}
+.scroller .row h1,
+.scroller .row h4 {
+  text-align: center;
+}
+.scroller .row p {
+  text-indent: 1rem;
+}
+.scroller .row table {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+.scroller .row table th {
+  padding: 0.25rem;
+  border: 1px solid white;
+}
+.scroller .row table td {
+  padding: 0.25rem;
+  border: 1px solid white;
+}
+.scroller .row .center {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 750px) {
+  .scroller .row {
+    flex-direction: column;
+  }
+  .scroller .row:nth-child(2n + 1) {
+    flex-direction: column-reverse;
+  }
+}
+
+.compare {
+  width: 100vw;
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+.compare div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-left: 2rem;
+}
+.compare div:last-child {
+  margin-right: 2rem;
+}
+.compare img {
+  width: 25rem;
+}
+
+.light {
+  padding: 1rem;
+  background: #0D9276;
+}
+.light div {
+  max-width: 40rem;
+  margin: 0 auto;
 }

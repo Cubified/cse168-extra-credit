@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSE 168 Final Project: Modern Denoising Approaches</title>
+    <title>CSE 168 Extra Credit Site</title>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/extra_credit.js"></script>
   </body>
 </html>
