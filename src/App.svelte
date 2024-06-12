@@ -136,6 +136,7 @@
           </li>
         </ul>
         <p>Below is a comparison of various input parameters described in the paper:  Outer loop iterations (recommended by authors to be set between 1 and 10), inner loop iterations (either 1 or 2), and image patch size (between 5 and 10).  Further testing outside of these ranges did not yield significantly different results, therefore only results using parameters in recommended ranges are shown.</p>
+        <p>Hover over each individual denoised image to view its difference from the ground truth image.</p>
       </div>
       <div class="right">
         <Reveal name="dragon" />
